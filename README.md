@@ -48,8 +48,6 @@ aignosis/
 │   ├── tsconfig.json                # TypeScript config
 │   ├── tailwind.config.js           # Tailwind config
 │   └── README.md
-├── random_video_encrypted.bin       # Sample encrypted video
-├── random_video_encrypted_key.bin   # Sample encrypted key
 └── README.md                        # This file
 ```
 
@@ -198,17 +196,6 @@ Edit `frontend/app/page.tsx` to change:
 - No authentication/authorization
 - No rate limiting
 
-### Production Recommendations
-- ✅ Store private key in secure key management system (AWS KMS, Azure Key Vault)
-- ✅ Implement authentication (JWT, OAuth2)
-- ✅ Restrict CORS to specific origins
-- ✅ Add rate limiting
-- ✅ Use HTTPS only
-- ✅ Implement access control for videos
-- ✅ Add audit logging
-- ✅ Use environment variables for configuration
-- ✅ Implement video watermarking
-- ✅ Add CDN for video delivery
 
 ## 🧪 Testing
 
@@ -302,70 +289,4 @@ Health check endpoint.
   "status": "healthy"
 }
 ```
-
-## 🚧 Future Enhancements
-
-- [ ] User authentication and authorization
-- [ ] Video quality selection (480p, 720p, 1080p)
-- [ ] Subtitle support
-- [ ] Video thumbnails
-- [ ] Playlist functionality
-- [ ] Watch history
-- [ ] Video analytics
-- [ ] Progressive Web App (PWA)
-- [ ] Video transcoding
-- [ ] Multi-language support
-
-## 📄 License
-
-This project is created for the Aignosis SDE Assignment.
-
-## 👨‍💻 Developer Notes
-
-### Adding New Videos
-
-1. Encrypt video and key files using the same encryption scheme
-2. Name files following the convention: `{uid}_{tid}_encrypted.bin`
-3. Place files in `backend/storage/`
-4. Files will be automatically available for streaming
-
-### Custom Encryption
-
-If you need to encrypt new videos, use the encryption script:
-
-```python
-# Example encryption (you'll need to implement this)
-from cryptography.hazmat.primitives.ciphers.aead import AESGCM
-from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
-from cryptography.hazmat.primitives import hashes
-import os
-
-# Generate password
-password = os.urandom(32)
-
-# Encrypt with RSA public key
-# ... (implement RSA encryption)
-
-# Encrypt video with AES-GCM
-salt = os.urandom(16)
-kdf = PBKDF2HMAC(algorithm=hashes.SHA256(), length=32, salt=salt, iterations=100000)
-key = kdf.derive(password)
-nonce = os.urandom(12)
-aesgcm = AESGCM(key)
-ciphertext = aesgcm.encrypt(nonce, video_data, None)
-
-# Save: salt + nonce + ciphertext
-```
-
-## 📞 Support
-
-For issues or questions:
-1. Check the troubleshooting section
-2. Review API documentation at `/docs`
-3. Check browser console for frontend errors
-4. Check server logs for backend errors
-
----
-
-Built with ❤️ for Aignosis Assignment
 
